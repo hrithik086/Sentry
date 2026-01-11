@@ -1,4 +1,25 @@
+<nav class="navbar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="SentryLogo/SentryLogo.png" alt="Sentry Logo" class="navbar-logo">
+        <h1 class="navbar-title">SENTRY</h1>
+        <div style="display: inline; margin-left: auto; margin-right: 20px;">
+            <button matButton style="color: white;" aria-label="Toggle Theme Button"  (click)=themeService.toggleTheme()>
+                @if (themeService.getCurrentTheme() === 'light') {
+                    <mat-icon id="themeIcon" aria-hidden="false" aria-label="Theme Icon" style="margin: 0px; font-size: 23px;" fontIcon="dark_mode"></mat-icon>
+                }
+                @else {
+                    <mat-icon id="themeIcon" aria-hidden="false" aria-label="Theme Icon" style="margin: 0px; font-size: 23px;" fontIcon="light_mode"></mat-icon>
+                }
+                
+            </button>
+        </div>
+    </div>
+</nav>
 <button matButton="outlined" (click)="themeService.setTheme('dark')">Dark Theme</button>
 <button matButton="outlined" (click)="themeService.setTheme('system')">System Theme</button>
 <button matButton="outlined" (click)="themeService.setTheme('light')">Light Theme</button>
 <h1>Hello World</h1>
+
+<div style="background-color: blue">
+    Hello world
+</div>

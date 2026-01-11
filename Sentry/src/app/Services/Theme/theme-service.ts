@@ -1,4 +1,4 @@
-import { DOCUMENT, inject, Injectable } from '@angular/core';
+import { computed, DOCUMENT, inject, Injectable, signal } from '@angular/core';
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -8,6 +8,9 @@ export type Theme = 'light' | 'dark' | 'system';
 export class ThemeService {
 
   private readonly document = inject(DOCUMENT);
+  private currentTheme = signal<Theme>('system');
+
+  public readonly getCurrentTheme = computed(() => this.currentTheme());
 
   constructor() {}
 
@@ -22,6 +25,16 @@ export class ThemeService {
     else if (theme === 'dark') {
       this.document.body.classList.add('dark-mode');
       this.document.body.classList.remove('light-mode');
+    }
+  }
+
+  toggleTheme(): void {
+    if (this.document.body.classList.contains('dark-mode')) {
+      this.setTheme('light');
+      this.currentTheme.set('light');
+    } else {
+      this.setTheme('dark');
+      this.currentTheme.set('dark');
     }
   }
 }

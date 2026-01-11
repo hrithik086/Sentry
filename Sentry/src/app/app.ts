@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatFabButton } from '@angular/material/button';
 import { ThemeService } from './Services/Theme/theme-service';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
-  imports: [MatButton],
+  imports: [MatButton, MatIcon],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
