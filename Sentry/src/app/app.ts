@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { ThemeService } from './Services/Theme/theme-service';
 import { MatIcon } from '@angular/material/icon';
+import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-root',
-  imports: [MatButton, MatIcon],
+  imports: [MatButton, MatIcon, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

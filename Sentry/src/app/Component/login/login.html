@@ -1,0 +1,23 @@
+<div style="display: flex;">
+    <div class="DisplayCard" style="background-image: url('SentryLogo/SentryLogo.png');">
+        <div class="displayTitleCard">
+            <h2>{{websiteTitle}}</h2>
+            <p>{{tagLine}}</p>
+        </div>
+    </div>
+    <div class="loginCard">
+        <h1>Hello world</h1>
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Choose file</mat-label>
+            <input matInput type="file">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Password</mat-label>
+            <input matInput type="password"  (click)="hide = !hide">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+</div>

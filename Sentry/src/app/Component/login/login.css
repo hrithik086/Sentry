@@ -1,0 +1,28 @@
+.loginCard{
+    background: linear-gradient(70deg, #224c69 0%, #27d0c0 100%);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    height: 820px;
+    margin-top: 5px;
+    margin-right: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.DisplayCard{
+    width: 50%;  
+    height: 820px; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 40px 20px;
+}
+
+.displayTitleCard{
+    text-align: center; 
+    position: relative; 
+    z-index: 1; 
+    font-family: sans-serif;
+    font-size: large;
+}
