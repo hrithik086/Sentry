@@ -27,6 +27,7 @@ export class Login {
   tagLine: string = 'Securely manage your credentials';
   hide: boolean = true;
 
+  //i have to remove this method and find out some alternate way
   public onFileChange(event: any): void {
     const inputElement: HTMLInputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
