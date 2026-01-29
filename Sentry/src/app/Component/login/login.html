@@ -8,20 +8,20 @@
     <div class="loginCard">
         <h1 class="formHeader">Welcome back</h1>
 
-        <form class="loginForm" autocomplete="off">
+        <form [formGroup]="loginForm" class="loginForm" autocomplete="off" (ngSubmit)="onSubmit()" >
             <div class="inputGroup">
                 <label for="username">Username</label>
-                <input id="username" class="input" type="text" placeholder="Enter username" />
+                <input id="username" class="input" type="text" placeholder="Enter username" formControlName="username"/>
             </div>
 
             <div class="inputGroup">
                 <label for="password">Password</label>
-                <input id="password" class="input" type="password" placeholder="Enter password" />
+                <input id="password" class="input" type="password" placeholder="Enter password" formControlName="password"/>
             </div>
 
             <div class="inputGroup">
                 <label>Upload file</label>
-                <input id="fileInput" type="file" style="display:none" accept=".json"/>
+                <input id="fileInput" type="file" style="display:none" accept=".json" (change)="onFileChange($event)"/>
                 <div class="fileRow">
                     <label class="fileLabel" for="fileInput">Browse...</label>
                     <span id="fileName" class="fileName">No file chosen</span>
