@@ -21,7 +21,7 @@
 
             <div class="inputGroup">
                 <label>Upload file</label>
-                <input id="fileInput" type="file" style="display:none" accept=".json" (change)="onFileChange($event)"/>
+                <input #fileInput id="fileInput" type="file" style="display:none" accept=".json"/>
                 <div class="fileRow">
                     <label class="fileLabel" for="fileInput">Browse...</label>
                     <span id="fileName" class="fileName">No file chosen</span>

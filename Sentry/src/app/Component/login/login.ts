@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { FileManager } from '../../Services/FileManager/file-manager';
@@ -11,6 +11,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './login.css',
 })
 export class Login {
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
   private fileManager: FileManager = inject(FileManager);
 
   public readonly loginForm: FormGroup;
@@ -27,18 +29,14 @@ export class Login {
   tagLine: string = 'Securely manage your credentials';
   hide: boolean = true;
 
-  //i have to remove this method and find out some alternate way
-  public onFileChange(event: any): void {
-    const inputElement: HTMLInputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      const file = inputElement.files[0];
+  public onSubmit(): void {
+    console.log(this.fileInput.nativeElement.files);
+    if(this.fileInput.nativeElement.files && this.fileInput.nativeElement.files.length > 0) {
+      const file = this.fileInput.nativeElement.files[0];
       this.loginForm.patchValue({
         uploadedFile: file
       });
     }
-  }
-
-  public onSubmit(): void {
     if(this.loginForm.valid) {
       this.fileManager.readJsonFile(this.loginForm.value.uploadedFile);
     }
