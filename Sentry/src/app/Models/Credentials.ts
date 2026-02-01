@@ -1,0 +1,10 @@
+import { OtherCredentialDetails } from "./OtherCredentialDetails";
+
+export class Credentials{
+    public domainName: string;
+    public userId: string;
+    public password: string;
+    public pin: string;
+    public securityKeys: string;
+    public otherDetails: OtherCredentialDetails[];
+}
