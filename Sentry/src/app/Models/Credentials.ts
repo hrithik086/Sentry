@@ -7,4 +7,13 @@ export class Credentials{
     public pin: string;
     public securityKeys: string;
     public otherDetails: OtherCredentialDetails[];
+
+    public initializeCredentials(credentials : Credentials){
+        this.domainName = credentials.domainName;
+        this.userId = credentials.userId;
+        this.password = credentials.password;
+        this.pin = credentials.pin;
+        this.securityKeys = credentials.securityKeys;
+        this.otherDetails = credentials.otherDetails;
+    }
 }

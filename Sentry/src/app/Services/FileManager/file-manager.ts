@@ -38,6 +38,7 @@ export class FileManager {
     if(credentials && credentials.length > 0){
       if(credentials.length > 1){
         // throw error
+        return '';
       }
       else{
         return this.decryptString(credentials[0].password);
@@ -46,15 +47,16 @@ export class FileManager {
     else{
       const encryptedCredentialIndex = this._allCredentialDetails.credentials.findIndex((cred) => cred.domainName === domainName && cred.userId === cred.userId);
       if(encryptedCredentialIndex >= 0){
-        const decryptedCredential = this.decryptString(this._allCredentialDetails.credentials[encryptedCredentialIndex].password);
-        // new DecryptedCredentials{
-          
-        // }
-        //i need create an object of DecryptedCredential to put this object inside the array of decrypted credential which will act as cache
+        const decryptedPassword = this.decryptString(this._allCredentialDetails.credentials[encryptedCredentialIndex].password);
+        const decryptedCredentialsObject = new DecryptedCredentials();
+        decryptedCredentialsObject.initializeDecryptedCredentials(this._allCredentialDetails.credentials[encryptedCredentialIndex], decryptedPassword);
+        return decryptedPassword;
+      }
+      else{
+        //throw error
+        return '';
       }
     }
-    //throw error
-    return ""
   }
 
   private refreshEncryptedCredentialsSignal() : void{
@@ -67,6 +69,10 @@ export class FileManager {
       this._allCredentialDetails.credentials.push(newCredential);
       this.refreshEncryptedCredentialsSignal();
     }
+  }
+
+  public updateCredentials(domainName : string, plainPassword : string){
+    
   }
 
   public removeEncryptedCredentials(domainName: string, userId: string){
@@ -90,7 +96,14 @@ export class FileManager {
   }
 
   private decryptString(cipherText: string){
+    //this logic should be moved to new service class responsible for encryptiona and decryption related logics
     //decryption logic to be implemented
     return ""
+  }
+
+  private encryptString(plainText : string) : string {
+    //this logic should be moved to new service class responsible for encryptiona and decryption related logics
+    //decryption logic to be implemented
+    return ''
   }
 }
