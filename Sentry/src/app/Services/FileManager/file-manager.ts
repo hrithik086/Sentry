@@ -1,8 +1,9 @@
 import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { LoginDetailsAndCredentials } from '../../Models/DTO/LoginDetaiilsAndCredentials';
 import { DecryptedCredentials } from '../../Models/DecryptedCredentials';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, forEach } from 'lodash';
 import { Credentials } from '../../Models/Credentials';
+import { OtherCredentialDetails } from '../../Models/OtherCredentialDetails';
 
 
 @Injectable({
@@ -63,7 +64,7 @@ export class FileManager {
     this._encryptedCredentials.set(this._allCredentialDetails.credentials);
   }
 
-  public addEncryptedCredential(newCredential: Credentials){
+  public addEncryptedCredential(newCredential: Credentials) : void{
     const checkExistingCredentials = this._allCredentialDetails.credentials.filter((credential) => credential.domainName === newCredential.domainName && credential.userId === newCredential.userId);
     if(checkExistingCredentials.length === 0){
       this._allCredentialDetails.credentials.push(newCredential);
@@ -71,11 +72,19 @@ export class FileManager {
     }
   }
 
-  public updateCredentials(domainName : string, plainPassword : string){
-    
+  public updateCredentials(decryptedCred: DecryptedCredentials){
+    const encryptedCred = this._allCredentialDetails.credentials.filter((cred) => cred.domainName === decryptedCred.domainName && cred.userId === decryptedCred.userId);
+    if(encryptedCred.length > 0){
+      this.updateValuesFromDecryptedCredentialtoEncryptedCredentials(encryptedCred[0], decryptedCred);
+      this.refreshEncryptedCredentialsSignal();
+      this.updateDecryptedCredentialsCache(decryptedCred);
+    }
+    else{
+      //throw error
+    }
   }
 
-  public removeEncryptedCredentials(domainName: string, userId: string){
+  public removeEncryptedCredentials(domainName: string, userId: string) : void{
     const filteredCredentials = this._allCredentialDetails.credentials.filter((cred) => cred.domainName === domainName && cred.userId === userId);
     if(filteredCredentials.length === 1){
       let index = this._allCredentialDetails.credentials.findIndex((cred) => cred.domainName==domainName && cred.userId === userId);
@@ -95,7 +104,7 @@ export class FileManager {
     }
   }
 
-  private decryptString(cipherText: string){
+  private decryptString(cipherText: string) : string{
     //this logic should be moved to new service class responsible for encryptiona and decryption related logics
     //decryption logic to be implemented
     return ""
@@ -105,5 +114,24 @@ export class FileManager {
     //this logic should be moved to new service class responsible for encryptiona and decryption related logics
     //decryption logic to be implemented
     return ''
+  }
+
+  private updateValuesFromDecryptedCredentialtoEncryptedCredentials(encryptedCred: Credentials, decryptedCred: DecryptedCredentials) : void{
+    encryptedCred.password = this.encryptString(decryptedCred.password);
+    encryptedCred.pin = this.encryptString(decryptedCred.pin);
+    encryptedCred.securityKeys = this.encryptString(decryptedCred.securityKeys);
+    encryptedCred.otherDetails = decryptedCred.otherDetails;
+    
+    encryptedCred.otherDetails?.forEach((item : OtherCredentialDetails) => item.value = this.encryptString(item.value));
+  }
+
+  private updateDecryptedCredentialsCache(decryptedCred: DecryptedCredentials) : void{
+    const cache = this._decryptedCredentials.filter((cred) => cred.domainName === decryptedCred.domainName && cred.userId === decryptedCred.userId);
+    if(cache.length > 0){
+      cache[0] = decryptedCred;
+    }
+    else{
+      this._decryptedCredentials.push(decryptedCred);
+    }
   }
 }
