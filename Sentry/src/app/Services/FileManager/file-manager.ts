@@ -4,6 +4,8 @@ import { DecryptedCredentials } from '../../Models/DecryptedCredentials';
 import { cloneDeep, forEach } from 'lodash';
 import { Credentials } from '../../Models/Credentials';
 import { OtherCredentialDetails } from '../../Models/OtherCredentialDetails';
+import { DuplicateCredentialError } from '../../Core/Error/DuplicateCredentialError';
+import { NoCredentialFoundError } from '../../Core/Error/NoCredentialFoundError';
 
 
 @Injectable({
@@ -38,8 +40,7 @@ export class FileManager {
     const credentials = this._decryptedCredentials.filter((decryptedCredential) => decryptedCredential.userId === userId && decryptedCredential.domainName === domainName);
     if(credentials && credentials.length > 0){
       if(credentials.length > 1){
-        // throw error
-        return '';
+        throw new DuplicateCredentialError('two or more credentials found with same user id and domain name combination');
       }
       else{
         return this.decryptString(credentials[0].password);
@@ -54,8 +55,7 @@ export class FileManager {
         return decryptedPassword;
       }
       else{
-        //throw error
-        return '';
+        throw new NoCredentialFoundError('No credentials found with the given domain and username');
       }
     }
   }
@@ -70,6 +70,9 @@ export class FileManager {
       this._allCredentialDetails.credentials.push(newCredential);
       this.refreshEncryptedCredentialsSignal();
     }
+    else{
+      throw new DuplicateCredentialError('Found duplicate domain name and user id combination in the database');
+    }
   }
 
   public updateCredentials(decryptedCred: DecryptedCredentials){
@@ -80,7 +83,7 @@ export class FileManager {
       this.updateDecryptedCredentialsCache(decryptedCred);
     }
     else{
-      //throw error
+      throw new NoCredentialFoundError('No Credentials are matching with the given username and domain name');
     }
   }
 
@@ -97,10 +100,10 @@ export class FileManager {
       this.refreshEncryptedCredentialsSignal();
     }
     else if(filteredCredentials.length > 1){
-      //log error that there are duplicates and we need to remove all and then we need to add one
+      throw new DuplicateCredentialError('two or more credentials found with the same domain name and user id');
     }
     else{
-      //log error that there is no object which is matching the domain name and userid.
+      throw new NoCredentialFoundError('No Credentials found with the provided domain name and user id.')
     }
   }
 
