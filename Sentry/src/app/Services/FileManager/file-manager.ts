@@ -1,4 +1,4 @@
-import { Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { inject, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { LoginDetailsAndCredentials } from '../../Models/DTO/LoginDetaiilsAndCredentials';
 import { DecryptedCredentials } from '../../Models/DecryptedCredentials';
 import { cloneDeep, forEach } from 'lodash';
@@ -6,15 +6,20 @@ import { Credentials } from '../../Models/Credentials';
 import { OtherCredentialDetails } from '../../Models/OtherCredentialDetails';
 import { DuplicateCredentialError } from '../../Core/Error/DuplicateCredentialError';
 import { NoCredentialFoundError } from '../../Core/Error/NoCredentialFoundError';
+import { EncryptDecryptService } from '../EncryptDecrypt/encrypt-decrypt-service';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileManager {
+  private encryptDecryptService : EncryptDecryptService = inject(EncryptDecryptService);
+
   private _allCredentialDetails: LoginDetailsAndCredentials;
   private _decryptedCredentials: DecryptedCredentials[];
   private _encryptedCredentials: WritableSignal<Credentials[]>;
+  private _jsonReadSuccessful : Subject<boolean> = new Subject<boolean>();
 
   public readJsonFile(file: File): void {
     let reader = new FileReader();
@@ -22,18 +27,39 @@ export class FileManager {
       try {
         const json = JSON.parse(event.target.result);
         this._allCredentialDetails = json as LoginDetailsAndCredentials;
+        this._jsonReadSuccessful.next(true);
+        this._jsonReadSuccessful.complete();
         console.log('JSON content:', json);
       } catch (e) {
         console.error('Error parsing JSON:', e);
+        this._jsonReadSuccessful.next(false);
       }
     };
     reader.readAsText(file);
+  }
+
+  public exportJsonFile() : void {
+    const blob = this.convertToJsonBlobFile();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = this._allCredentialDetails.fileName + '.json';
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 
   public get allCredentialDetails(): Signal<Credentials[]> {
     if(this._encryptedCredentials == null)
       this._encryptedCredentials = signal<Credentials[]>(this._allCredentialDetails.credentials);
     return this._encryptedCredentials.asReadonly();
+  }
+
+  public get JsonReadSuccessfulObservable() : Observable<boolean> {
+    return this._jsonReadSuccessful.asObservable();
+  }
+
+  public get HashedPasswordFromJson() : string {
+    return this._allCredentialDetails.password;
   }
   
   public decryptedCredentials(domainName: string, userId: string) : string{
@@ -43,13 +69,13 @@ export class FileManager {
         throw new DuplicateCredentialError('two or more credentials found with same user id and domain name combination');
       }
       else{
-        return this.decryptString(credentials[0].password);
+        return this.encryptDecryptService.decryptString(credentials[0].password);
       }
     }
     else{
       const encryptedCredentialIndex = this._allCredentialDetails.credentials.findIndex((cred) => cred.domainName === domainName && cred.userId === cred.userId);
       if(encryptedCredentialIndex >= 0){
-        const decryptedPassword = this.decryptString(this._allCredentialDetails.credentials[encryptedCredentialIndex].password);
+        const decryptedPassword = this.encryptDecryptService.decryptString(this._allCredentialDetails.credentials[encryptedCredentialIndex].password);
         const decryptedCredentialsObject = new DecryptedCredentials();
         decryptedCredentialsObject.initializeDecryptedCredentials(this._allCredentialDetails.credentials[encryptedCredentialIndex], decryptedPassword);
         return decryptedPassword;
@@ -107,25 +133,13 @@ export class FileManager {
     }
   }
 
-  private decryptString(cipherText: string) : string{
-    //this logic should be moved to new service class responsible for encryptiona and decryption related logics
-    //decryption logic to be implemented
-    return ""
-  }
-
-  private encryptString(plainText : string) : string {
-    //this logic should be moved to new service class responsible for encryptiona and decryption related logics
-    //decryption logic to be implemented
-    return ''
-  }
-
   private updateValuesFromDecryptedCredentialtoEncryptedCredentials(encryptedCred: Credentials, decryptedCred: DecryptedCredentials) : void{
-    encryptedCred.password = this.encryptString(decryptedCred.password);
-    encryptedCred.pin = this.encryptString(decryptedCred.pin);
-    encryptedCred.securityKeys = this.encryptString(decryptedCred.securityKeys);
+    encryptedCred.password = this.encryptDecryptService.encryptString(decryptedCred.password);
+    encryptedCred.pin = this.encryptDecryptService.encryptString(decryptedCred.pin);
+    encryptedCred.securityKeys = this.encryptDecryptService.encryptString(decryptedCred.securityKeys);
     encryptedCred.otherDetails = decryptedCred.otherDetails;
     
-    encryptedCred.otherDetails?.forEach((item : OtherCredentialDetails) => item.value = this.encryptString(item.value));
+    encryptedCred.otherDetails?.forEach((item : OtherCredentialDetails) => item.value = this.encryptDecryptService.encryptString(item.value));
   }
 
   private updateDecryptedCredentialsCache(decryptedCred: DecryptedCredentials) : void{
@@ -136,5 +150,11 @@ export class FileManager {
     else{
       this._decryptedCredentials.push(decryptedCred);
     }
+  }
+
+  private convertToJsonBlobFile() : Blob{
+    const jsonString = JSON.stringify(this._allCredentialDetails);
+    const blob = new Blob([jsonString], {type: 'application/json'});
+    return blob;
   }
 }
