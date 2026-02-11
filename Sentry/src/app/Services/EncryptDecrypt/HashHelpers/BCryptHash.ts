@@ -17,8 +17,7 @@ export class BCryptHash {
   protected async verifyPlainTextAgainstHash(plainText: string, hashedText: string): Promise<boolean> {
     try {
       plainText = this.salt + plainText;
-      const hashedPlainText = await bcrypt.hash(plainText, this.computationRounds);
-      return hashedPlainText == hashedText;
+      return await bcrypt.compare(plainText, hashedText);
     } catch {
       //log error
       return false;

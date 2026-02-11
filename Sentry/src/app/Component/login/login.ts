@@ -5,6 +5,7 @@ import { FileManager } from '../../Services/FileManager/file-manager';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class Login implements OnDestroy{
 
   private fileManager: FileManager = inject(FileManager);
   private encryptDecryptService : EncryptDecryptService = inject(EncryptDecryptService);
+  private router : Router = inject(Router);
   private jsonReadSuccessfulSubscription : Subscription;
 
   public readonly loginForm: FormGroup;
@@ -27,6 +29,7 @@ export class Login implements OnDestroy{
       password: [''],
       uploadedFile: [null, Validators.required]
     });
+    this.jsonReadSuccessfulSubscription = this.fileManager.JsonReadSuccessfulObservable.subscribe(status => this.jsonReadSuccessfulListener(status));
   }
 
   ngOnDestroy(): void {
@@ -38,8 +41,6 @@ export class Login implements OnDestroy{
   hide: boolean = true;
 
   public onSubmit(): void {
-    this.jsonReadSuccessfulSubscription = this.fileManager.JsonReadSuccessfulObservable.subscribe(this.jsonReadSuccessfulListener);
-
     if(this.fileInput.nativeElement.files && this.fileInput.nativeElement.files.length > 0) {
       const file = this.fileInput.nativeElement.files[0];
       this.loginForm.patchValue({
@@ -52,6 +53,14 @@ export class Login implements OnDestroy{
   }
 
   private jsonReadSuccessfulListener(status : boolean) : void {
-    this.encryptDecryptService.
+    this.encryptDecryptService.verifyPassword(this.loginForm.value['password'], this.fileManager.HashedPasswordFromJson)
+      .then(result => {
+        if(result){
+          this.router.navigate(['/PasswordViewer']);
+        }
+        else{
+          //show warning that entered usernam and password is wrong
+        }
+      })
   }
 }

@@ -28,7 +28,6 @@ export class FileManager {
         const json = JSON.parse(event.target.result);
         this._allCredentialDetails = json as LoginDetailsAndCredentials;
         this._jsonReadSuccessful.next(true);
-        this._jsonReadSuccessful.complete();
         console.log('JSON content:', json);
       } catch (e) {
         console.error('Error parsing JSON:', e);

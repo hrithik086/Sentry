@@ -30,8 +30,7 @@ export class EncryptDecryptService extends BCryptHash {
     }).toString();
   }
 
-  public verifyPassword(passwordToVerify : string, hashedPassword : string) : boolean {
-    this.verifyPlainTextAgainstHash(passwordToVerify, hashedPassword)
-    return false;
+  public verifyPassword(passwordToVerify : string, hashedPassword : string) : Promise<boolean> {
+    return this.verifyPlainTextAgainstHash(passwordToVerify, hashedPassword)
   }
 }
