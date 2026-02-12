@@ -21,6 +21,8 @@ export class Login implements OnDestroy{
   private router : Router = inject(Router);
   private jsonReadSuccessfulSubscription : Subscription;
 
+  private isAuthenticationSuccess : boolean = false;
+
   public readonly loginForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
@@ -33,6 +35,9 @@ export class Login implements OnDestroy{
   }
 
   ngOnDestroy(): void {
+    if(this.isAuthenticationSuccess){
+      this.encryptDecryptService.calculateAndSetSymmetricKey(this.loginForm.value['username'], this.loginForm.value['password'])
+    }
     this.jsonReadSuccessfulSubscription.unsubscribe();
   }
 
@@ -56,6 +61,7 @@ export class Login implements OnDestroy{
     this.encryptDecryptService.verifyPassword(this.loginForm.value['password'], this.fileManager.HashedPasswordFromJson)
       .then(result => {
         if(result){
+          this.isAuthenticationSuccess = true;
           this.router.navigate(['/PasswordViewer']);
         }
         else{

@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
+import { FileManager } from '../../Services/FileManager/file-manager';
+import { invoke } from 'lodash';
 
 @Component({
   selector: 'app-password-viewer',
@@ -8,6 +11,9 @@ import { Component } from '@angular/core';
   styleUrl: './password-viewer.css',
 })
 export class PasswordViewer {
+  private encryptionDecryptionService: EncryptDecryptService = inject(EncryptDecryptService);
+  private fileManagerService: FileManager = inject(FileManager);
+  
   credentials: Array<any> = [
     {
       siteName: 'Google',
@@ -38,11 +44,16 @@ export class PasswordViewer {
     },
   ];
 
+  constructor(){
+    this.fileManagerService.allCredentialDetails;
+  }
+
   toggleExpand(index: number) {
     this.credentials[index].expanded = !this.credentials[index].expanded;
   }
 
   togglePassword(index: number) {
+    this.credentials[index].password = this.fileManagerService.decryptedCredentials(this.credentials[index].siteName, this.credentials[index].username);
     this.credentials[index].showPassword = !this.credentials[index].showPassword;
   }
 
