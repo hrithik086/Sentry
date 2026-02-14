@@ -17,7 +17,7 @@ export class FileManager {
   private encryptDecryptService : EncryptDecryptService = inject(EncryptDecryptService);
 
   private _allCredentialDetails: LoginDetailsAndCredentials;
-  private _decryptedCredentials: DecryptedCredentials[];
+  private _decryptedCredentialsCache: DecryptedCredentials[] = [];
   private _encryptedCredentials: WritableSignal<Credentials[]>;
   private _jsonReadSuccessful : Subject<boolean> = new Subject<boolean>();
 
@@ -62,21 +62,24 @@ export class FileManager {
   }
   
   public decryptedCredentials(domainName: string, userId: string) : string{
-    const credentials = this._decryptedCredentials.filter((decryptedCredential) => decryptedCredential.userId === userId && decryptedCredential.domainName === domainName);
-    if(credentials && credentials.length > 0){
-      if(credentials.length > 1){
+    const caccheCredentials = this._decryptedCredentialsCache?.filter((decryptedCredential) => decryptedCredential.userId === userId && decryptedCredential.domainName === domainName);
+    if(caccheCredentials && caccheCredentials.length > 0){
+      if(caccheCredentials.length > 1){
         throw new DuplicateCredentialError('two or more credentials found with same user id and domain name combination');
       }
       else{
-        return this.encryptDecryptService.decryptString(credentials[0].password);
+        return this.encryptDecryptService.decryptString(caccheCredentials[0].password);
       }
     }
     else{
       const encryptedCredentialIndex = this._allCredentialDetails.credentials.findIndex((cred) => cred.domainName === domainName && cred.userId === cred.userId);
       if(encryptedCredentialIndex >= 0){
         const decryptedPassword = this.encryptDecryptService.decryptString(this._allCredentialDetails.credentials[encryptedCredentialIndex].password);
+        
         const decryptedCredentialsObject = new DecryptedCredentials();
         decryptedCredentialsObject.initializeDecryptedCredentials(this._allCredentialDetails.credentials[encryptedCredentialIndex], decryptedPassword);
+        this._decryptedCredentialsCache.push(decryptedCredentialsObject);
+
         return decryptedPassword;
       }
       else{
@@ -118,9 +121,9 @@ export class FileManager {
       let index = this._allCredentialDetails.credentials.findIndex((cred) => cred.domainName==domainName && cred.userId === userId);
       this._allCredentialDetails.credentials.splice(index, 1);
 
-      index = this._decryptedCredentials.findIndex((cred) => cred.domainName==domainName && cred.userId === userId);
+      index = this._decryptedCredentialsCache.findIndex((cred) => cred.domainName==domainName && cred.userId === userId);
       if(index >= 0)
-        this._decryptedCredentials.splice(index,1);
+        this._decryptedCredentialsCache.splice(index,1);
 
       this.refreshEncryptedCredentialsSignal();
     }
@@ -142,12 +145,12 @@ export class FileManager {
   }
 
   private updateDecryptedCredentialsCache(decryptedCred: DecryptedCredentials) : void{
-    const cache = this._decryptedCredentials.filter((cred) => cred.domainName === decryptedCred.domainName && cred.userId === decryptedCred.userId);
+    const cache = this._decryptedCredentialsCache.filter((cred) => cred.domainName === decryptedCred.domainName && cred.userId === decryptedCred.userId);
     if(cache.length > 0){
       cache[0] = decryptedCred;
     }
     else{
-      this._decryptedCredentials.push(decryptedCred);
+      this._decryptedCredentialsCache.push(decryptedCred);
     }
   }
 

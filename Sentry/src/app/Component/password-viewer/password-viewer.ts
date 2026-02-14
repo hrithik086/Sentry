@@ -16,27 +16,27 @@ export class PasswordViewer {
   
   credentials: Array<any> = [
     {
-      siteName: 'Google',
+      domainName: 'Google',
       url: 'https://accounts.google.com',
-      username: 'youremail@gmail.com',
+      userId: 'youremail@gmail.com',
       password: 'P@ssw0rd!23',
       lastUsed: '2 days ago',
       expanded: false,
       showPassword: false,
     },
     {
-      siteName: 'GitHub',
+      domainName: 'GitHub',
       url: 'https://github.com',
-      username: 'dev-user',
+      userId: 'dev-user',
       password: 'ghp_verysecret',
       lastUsed: '1 week ago',
       expanded: false,
       showPassword: false,
     },
     {
-      siteName: 'Figma',
+      domainName: 'Figma',
       url: 'https://www.figma.com',
-      username: 'designer@example.com',
+      userId: 'designer@example.com',
       password: 'designPass#1',
       lastUsed: '3 weeks ago',
       expanded: false,
@@ -53,7 +53,7 @@ export class PasswordViewer {
   }
 
   togglePassword(index: number) {
-    this.credentials[index].password = this.fileManagerService.decryptedCredentials(this.credentials[index].siteName, this.credentials[index].username);
+    this.credentials[index].password = this.fileManagerService.decryptedCredentials(this.credentials[index].domainName, this.credentials[index].userId);
     this.credentials[index].showPassword = !this.credentials[index].showPassword;
   }
 
