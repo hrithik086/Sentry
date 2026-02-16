@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
 import { FileManager } from '../../Services/FileManager/file-manager';
 import { invoke } from 'lodash';
+import { Credentials } from '../../Models/Credentials';
 
 @Component({
   selector: 'app-password-viewer',
@@ -13,6 +14,8 @@ import { invoke } from 'lodash';
 export class PasswordViewer {
   private encryptionDecryptionService: EncryptDecryptService = inject(EncryptDecryptService);
   private fileManagerService: FileManager = inject(FileManager);
+
+  public credentialss : Signal<Credentials>;
   
   credentials: Array<any> = [
     {

@@ -76,8 +76,10 @@ export class FileManager {
       if(encryptedCredentialIndex >= 0){
         const decryptedPassword = this.encryptDecryptService.decryptString(this._allCredentialDetails.credentials[encryptedCredentialIndex].password);
         
-        const decryptedCredentialsObject = new DecryptedCredentials();
-        decryptedCredentialsObject.initializeDecryptedCredentials(this._allCredentialDetails.credentials[encryptedCredentialIndex], decryptedPassword);
+        const decryptedCredentialsObject : DecryptedCredentials = {
+          ...this._allCredentialDetails.credentials[encryptedCredentialIndex],
+          decryptedPassword: decryptedPassword
+        };
         this._decryptedCredentialsCache.push(decryptedCredentialsObject);
 
         return decryptedPassword;

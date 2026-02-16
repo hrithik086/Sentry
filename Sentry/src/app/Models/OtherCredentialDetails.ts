@@ -1,5 +1,5 @@
-export class OtherCredentialDetails{
-    public informationType: string;
-    public key: string;
-    public value: string; 
+export interface OtherCredentialDetails{
+    informationType: string;
+    key: string;
+    value: string; 
 }

@@ -1,0 +1,12 @@
+import { OtherCredentialDetails } from "../OtherCredentialDetails";
+
+export interface PasswordCardDetails {
+    domainName: string,
+    url: string,
+    userId: string,
+    password: string,
+    expanded: boolean,
+    showPassword: boolean,
+    securityKeys: string,
+    otherDetails: OtherCredentialDetails[]
+}
