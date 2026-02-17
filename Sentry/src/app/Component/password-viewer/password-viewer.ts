@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Signal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, Signal, WritableSignal } from '@angular/core';
 import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
 import { FileManager } from '../../Services/FileManager/file-manager';
 import { invoke } from 'lodash';
 import { Credentials } from '../../Models/Credentials';
+import { CredentialsCardDetails } from '../../Models/ViewModel/CredentialsCardDetails'
 
 @Component({
   selector: 'app-password-viewer',
@@ -15,49 +16,32 @@ export class PasswordViewer {
   private encryptionDecryptionService: EncryptDecryptService = inject(EncryptDecryptService);
   private fileManagerService: FileManager = inject(FileManager);
 
-  public credentialss : Signal<Credentials>;
-  
-  credentials: Array<any> = [
-    {
-      domainName: 'Google',
-      url: 'https://accounts.google.com',
-      userId: 'youremail@gmail.com',
-      password: 'P@ssw0rd!23',
-      lastUsed: '2 days ago',
-      expanded: false,
-      showPassword: false,
-    },
-    {
-      domainName: 'GitHub',
-      url: 'https://github.com',
-      userId: 'dev-user',
-      password: 'ghp_verysecret',
-      lastUsed: '1 week ago',
-      expanded: false,
-      showPassword: false,
-    },
-    {
-      domainName: 'Figma',
-      url: 'https://www.figma.com',
-      userId: 'designer@example.com',
-      password: 'designPass#1',
-      lastUsed: '3 weeks ago',
-      expanded: false,
-      showPassword: false,
-    },
-  ];
+  public credentials : WritableSignal<CredentialsCardDetails[]>;
 
   constructor(){
-    this.fileManagerService.allCredentialDetails;
+    this.credentials = linkedSignal(() => {
+      return this.fileManagerService.allCredentialDetails().map((cred) => {
+        return {
+          ...cred,
+          id: cred.domainName+cred.userId,
+          expanded : false,
+          showPassword : false
+        } as CredentialsCardDetails;
+      })
+    });
   }
 
-  toggleExpand(index: number) {
-    this.credentials[index].expanded = !this.credentials[index].expanded;
+  toggleExpand(id: string, expandValue : boolean) {
+    this.credentials().forEach((item) => {
+      if(item.id === id){
+        item.expanded = expandValue;
+      }
+    })
   }
 
   togglePassword(index: number) {
-    this.credentials[index].password = this.fileManagerService.decryptedCredentials(this.credentials[index].domainName, this.credentials[index].userId);
-    this.credentials[index].showPassword = !this.credentials[index].showPassword;
+    this.credentials()[index].password = this.fileManagerService.decryptedCredentials(this.credentials()[index].domainName, this.credentials()[index].userId);
+    this.credentials()[index].showPassword = !this.credentials()[index].showPassword;
   }
 
   mask(password: string) {

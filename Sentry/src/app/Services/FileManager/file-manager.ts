@@ -139,8 +139,8 @@ export class FileManager {
 
   private updateValuesFromDecryptedCredentialtoEncryptedCredentials(encryptedCred: Credentials, decryptedCred: DecryptedCredentials) : void{
     encryptedCred.password = this.encryptDecryptService.encryptString(decryptedCred.password);
-    encryptedCred.pin = this.encryptDecryptService.encryptString(decryptedCred.pin);
-    encryptedCred.securityKeys = this.encryptDecryptService.encryptString(decryptedCred.securityKeys);
+    encryptedCred.pin = decryptedCred.pin ? this.encryptDecryptService.encryptString(decryptedCred.pin) : undefined; 
+    encryptedCred.securityKeys = decryptedCred.securityKeys ? this.encryptDecryptService.encryptString(decryptedCred.securityKeys) : undefined;
     encryptedCred.otherDetails = decryptedCred.otherDetails;
     
     encryptedCred.otherDetails?.forEach((item : OtherCredentialDetails) => item.value = this.encryptDecryptService.encryptString(item.value));
