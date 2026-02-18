@@ -31,17 +31,22 @@ export class PasswordViewer {
     });
   }
 
-  toggleExpand(id: string, expandValue : boolean) {
+  toggleExpand(id: string) {
     this.credentials().forEach((item) => {
       if(item.id === id){
-        item.expanded = expandValue;
+        item.expanded = !item.expanded;
       }
     })
   }
 
-  togglePassword(index: number) {
-    this.credentials()[index].password = this.fileManagerService.decryptedCredentials(this.credentials()[index].domainName, this.credentials()[index].userId);
-    this.credentials()[index].showPassword = !this.credentials()[index].showPassword;
+  togglePassword(id:string) {
+    this.credentials().forEach((item) => {
+      if(item.id === id){
+        item.password = this.fileManagerService.decryptedCredentials(item.domainName, item.userId);
+        item.showPassword = !item.showPassword;
+        return;
+      }
+    });
   }
 
   mask(password: string) {
