@@ -1,23 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, linkedSignal, Signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, signal, Signal, WritableSignal } from '@angular/core';
 import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
 import { FileManager } from '../../Services/FileManager/file-manager';
 import { invoke } from 'lodash';
 import { Credentials } from '../../Models/Credentials';
 import { CredentialsCardDetails } from '../../Models/ViewModel/CredentialsCardDetails'
 import { CredentialsCardDetailsComponent } from '../credentials-card-details/credentials-card-details';
+import { Router } from '@angular/router';
+import { AddNewCredential } from '../add-new-credential/add-new-credential';
 
 @Component({
   selector: 'app-password-viewer',
-  imports: [CommonModule, CredentialsCardDetailsComponent],
+  imports: [CommonModule, CredentialsCardDetailsComponent, AddNewCredential],
   templateUrl: './password-viewer.html',
   styleUrl: './password-viewer.css',
 })
 export class PasswordViewer {
   private encryptionDecryptionService: EncryptDecryptService = inject(EncryptDecryptService);
   private fileManagerService: FileManager = inject(FileManager);
+  private router: Router = inject(Router);
 
   public credentials : WritableSignal<CredentialsCardDetails[]>;
+  public isOpenAddNewCredentialsCard = signal(false);
 
   constructor(){
     this.credentials = linkedSignal(() => {
@@ -48,5 +52,15 @@ export class PasswordViewer {
         return;
       }
     });
+  }
+
+  onCardClosed(){
+    this.isOpenAddNewCredentialsCard.set(false);
+  }
+
+  openAddNewCredentialsCard(){
+    if(!this.isOpenAddNewCredentialsCard()){
+      this.isOpenAddNewCredentialsCard.set(true)
+    }
   }
 }
