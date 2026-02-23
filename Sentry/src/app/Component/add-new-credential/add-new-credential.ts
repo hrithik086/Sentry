@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -7,6 +7,9 @@ import {
   Validators,
   FormArray,
 } from '@angular/forms';
+import { FileManager } from '../../Services/FileManager/file-manager';
+import { OtherCredentialDetails } from '../../Models/OtherCredentialDetails';
+import { DecryptedCredentials } from '../../Models/DecryptedCredentials';
 
 @Component({
   selector: 'app-add-new-credential',
@@ -19,6 +22,7 @@ export class AddNewCredential implements OnInit {
   public onCardCloseEvent: EventEmitter<void> = new EventEmitter();
 
   credentialForm!: FormGroup;
+  private fileService = inject(FileManager)
 
   constructor(private fb: FormBuilder) {}
 
@@ -37,11 +41,11 @@ export class AddNewCredential implements OnInit {
     });
   }
 
-  get otherDetailsControl(): FormArray {
+  private get otherDetailsControl(): FormArray {
     return this.credentialForm.get('otherDetails') as FormArray;
   }
 
-  otherDetailsArray() {
+  public get otherDetailsArray() {
     return this.otherDetailsControl;
   }
 
@@ -65,9 +69,23 @@ export class AddNewCredential implements OnInit {
 
   onSubmit(): void {
     if (this.credentialForm.valid) {
-      const formData = this.credentialForm.value;
-      console.log('Form submitted:', formData);
-      // Add your submit logic here
+      const otherDetails = this.credentialForm.value.otherDetails;
+      const filteredOtherDetails = otherDetails.filter((detail : OtherCredentialDetails) => detail.informationType.length && detail.key.length && detail.value.length)
+      this.credentialForm.patchValue({
+        otherDetails: filteredOtherDetails
+      });
+
+      const decryptedCredential : DecryptedCredentials = {
+        domainName : this.credentialForm.value.domainName,
+        userId : this.credentialForm.value.userId,
+        password: '',
+        decryptedPassword: this.credentialForm.value.password,
+        decryptedSecurityKeys: this.credentialForm.value.securityKeys?.length ? this.credentialForm.value.securityKeys : '',
+        decryptedPin : this.credentialForm.value.pin?.length ? this.credentialForm.value.pin : '',
+        decryptedOtherDetails: filteredOtherDetails
+      };
+
+      this.fileService.addNewCredential(decryptedCredential);
     }
   }
 

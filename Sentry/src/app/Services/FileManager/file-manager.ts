@@ -94,7 +94,7 @@ export class FileManager {
     this._encryptedCredentials.set(this._allCredentialDetails.credentials);
   }
 
-  public addEncryptedCredential(newCredential: Credentials) : void{
+  private addEncryptedCredential(newCredential: Credentials) : void{
     const checkExistingCredentials = this._allCredentialDetails.credentials.filter((credential) => credential.domainName === newCredential.domainName && credential.userId === newCredential.userId);
     if(checkExistingCredentials.length === 0){
       this._allCredentialDetails.credentials.push(newCredential);
@@ -103,6 +103,28 @@ export class FileManager {
     else{
       throw new DuplicateCredentialError('Found duplicate domain name and user id combination in the database');
     }
+  }
+
+  public addNewCredential(newCredential: DecryptedCredentials) : void{
+    newCredential.password = this.encryptDecryptService.encryptString(newCredential.decryptedPassword);
+    newCredential.pin = newCredential.decryptedPin?.length ? this.encryptDecryptService.encryptString(newCredential.decryptedPin) : '';
+    newCredential.securityKeys = newCredential.decryptedSecurityKeys?.length ? this.encryptDecryptService.encryptString(newCredential.decryptedSecurityKeys) : '';
+    
+    newCredential.otherDetails = newCredential.decryptedOtherDetails?.map((detail: OtherCredentialDetails) => {
+      detail.value = this.encryptDecryptService.encryptString(detail.value);
+      return detail;
+    })
+
+    const encryptedCredential : Credentials = {
+      domainName: newCredential.domainName,
+      userId: newCredential.userId,
+      password: newCredential.password,
+      pin: newCredential.pin,
+      securityKeys: newCredential.securityKeys,
+      otherDetails: newCredential.otherDetails
+    }
+
+    this.addEncryptedCredential(encryptedCredential);
   }
 
   public updateCredentials(decryptedCred: DecryptedCredentials){
