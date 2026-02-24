@@ -91,7 +91,7 @@ export class FileManager {
   }
 
   private refreshEncryptedCredentialsSignal() : void{
-    this._encryptedCredentials.set(this._allCredentialDetails.credentials);
+    this._encryptedCredentials.set([...this._allCredentialDetails.credentials]);
   }
 
   private addEncryptedCredential(newCredential: Credentials) : void{
