@@ -10,10 +10,11 @@ import {
 import { FileManager } from '../../Services/FileManager/file-manager';
 import { OtherCredentialDetails } from '../../Models/OtherCredentialDetails';
 import { DecryptedCredentials } from '../../Models/DecryptedCredentials';
+import { BulkImportCredentials } from '../bulk-import-credentials/bulk-import-credentials';
 
 @Component({
   selector: 'app-add-new-credential',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, BulkImportCredentials],
   templateUrl: './add-new-credential.html',
   styleUrl: './add-new-credential.css',
 })
@@ -22,6 +23,7 @@ export class AddNewCredential implements OnInit {
   public onCardCloseEvent: EventEmitter<void> = new EventEmitter();
 
   credentialForm!: FormGroup;
+  selectedTab: 'add' | 'import' = 'add';
   private fileService = inject(FileManager)
 
   constructor(private fb: FormBuilder) {}
@@ -91,5 +93,9 @@ export class AddNewCredential implements OnInit {
 
   closeCard(){
     this.onCardCloseEvent.emit();
+  }
+
+  selectTab(tab: 'add' | 'import'): void {
+    this.selectedTab = tab;
   }
 }
