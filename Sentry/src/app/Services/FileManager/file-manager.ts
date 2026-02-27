@@ -8,6 +8,7 @@ import { DuplicateCredentialError } from '../../Core/Error/DuplicateCredentialEr
 import { NoCredentialFoundError } from '../../Core/Error/NoCredentialFoundError';
 import { EncryptDecryptService } from '../EncryptDecrypt/encrypt-decrypt-service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import * as Papa from 'papaparse';
 
 
 @Injectable({
@@ -35,6 +36,20 @@ export class FileManager {
       }
     };
     reader.readAsText(file);
+  }
+
+  public readBulkImportCsvFile(file: File, isImporting: WritableSignal<boolean>) : void{
+    isImporting.set(true);
+
+    if(file){
+      Papa.parse(file, {
+        header: true,          
+        skipEmptyLines: true,  
+        complete: (result) => {
+          console.log(result.data);
+        }
+      });
+    }
   }
 
   public exportJsonFile() : void {
