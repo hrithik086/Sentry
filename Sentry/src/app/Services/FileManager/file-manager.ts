@@ -8,6 +8,7 @@ import { DuplicateCredentialError } from '../../Core/Error/DuplicateCredentialEr
 import { NoCredentialFoundError } from '../../Core/Error/NoCredentialFoundError';
 import { EncryptDecryptService } from '../EncryptDecrypt/encrypt-decrypt-service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import * as XLSX from 'xlsx';
 
 
 @Injectable({
@@ -156,6 +157,48 @@ export class FileManager {
     }
     else{
       throw new NoCredentialFoundError('No Credentials found with the provided domain name and user id.')
+    }
+  }
+
+  public readBulkImportXlsxFile(file: File, isImporting: WritableSignal<boolean>) : void{
+    isImporting.set(true);
+
+    if(file){
+      const reader: FileReader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const binaryStr: string = e.target.result;
+        const domainName = 'Domain Name';
+        const userId = 'User Id';
+        const password = 'Password';
+        const pin = 'Pin';
+        const securityKeys = 'SecurityKeys'
+
+        const workbook: XLSX.WorkBook = XLSX.read(binaryStr, {
+          type: 'binary'
+        });
+
+        const sheetName: string = workbook.SheetNames[0];
+        const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+        const data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+
+        for(var i = 1; i < data.length; i++){
+          const itemData = data[i] as Record<string, any>;
+
+          const decryptedCredential : DecryptedCredentials = {
+            domainName : itemData[domainName],
+            userId : itemData[userId],
+            password: '',
+            decryptedPassword: itemData[password],
+            decryptedSecurityKeys: itemData[securityKeys]?.length ? itemData[securityKeys] : '',
+            decryptedPin : itemData[pin]?.length ? itemData[pin] : ''
+          };
+          this.addNewCredential(decryptedCredential);
+        }
+
+        isImporting.set(false);
+      };
+      reader.readAsBinaryString(file);
     }
   }
 
