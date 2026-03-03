@@ -63,4 +63,8 @@ export class PasswordViewer {
       this.isOpenAddNewCredentialsCard.set(true)
     }
   }
+
+  exportToJsonFile(){
+    this.fileManagerService.exportJsonFile();
+  }
 }

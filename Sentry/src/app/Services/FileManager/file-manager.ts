@@ -39,11 +39,20 @@ export class FileManager {
   }
 
   public exportJsonFile() : void {
+    const todaysDateAndTime = new Date();
+    const fileName = this._allCredentialDetails.userId 
+      + todaysDateAndTime.getDate().toString().padStart(2, '0') 
+      + '-' + todaysDateAndTime.getMonth().toString().padStart(2, '0') 
+      + '-' + todaysDateAndTime.getFullYear() 
+      + 'T' + todaysDateAndTime.getHours()
+      + ':' + todaysDateAndTime.getMinutes();
+    this._allCredentialDetails.fileName = fileName;
+
     const blob = this.convertToJsonBlobFile();
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = this._allCredentialDetails.fileName + '.json';
+    a.download = fileName + '.json';
     a.click();
     window.URL.revokeObjectURL(url);
   }
