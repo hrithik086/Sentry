@@ -30,6 +30,24 @@
 
             <button type="submit" class="submitBtn">Sign in</button>
         </form>
+        <br>
+        <hr>
+        <br>
+        <h1 class="formHeader">New User ? Register Here</h1>
+
+        <form [formGroup]="registerForm" class="loginForm" autocomplete="off" (ngSubmit)="onRegister()">
+            <div class="inputGroup">
+                <label for="username">Username</label>
+                <input id="username" class="input" type="text" placeholder="Enter username" formControlName="username"/>
+            </div>
+            <div class="inputGroup">
+                <label for="password">Password</label>
+                <input id="password" class="input" type="password" placeholder="Enter password" formControlName="password"/>
+            </div>
+            <button type="submit" class="submitBtn">Register</button>
+        </form>
+
+
 
         <script>
         const fileInput = document.getElementById('fileInput');

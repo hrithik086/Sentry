@@ -24,6 +24,7 @@ export class Login implements OnDestroy{
   private isAuthenticationSuccess : boolean = false;
 
   public readonly loginForm: FormGroup;
+  public readonly registerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
@@ -31,6 +32,11 @@ export class Login implements OnDestroy{
       password: [''],
       uploadedFile: [null, Validators.required]
     });
+    this.registerForm = formBuilder.group({
+      username: [''],
+      password: ['']
+    });
+
     this.jsonReadSuccessfulSubscription = this.fileManager.JsonReadSuccessfulObservable.subscribe(status => this.jsonReadSuccessfulListener(status));
   }
 
@@ -54,6 +60,22 @@ export class Login implements OnDestroy{
     }
     if(this.loginForm.valid) {
       this.fileManager.readJsonFile(this.loginForm.value.uploadedFile);
+    }
+  }
+
+  public onRegister(){
+    if(this.registerForm.valid){
+      this.fileManager.onboardObjectForNewUser(this.registerForm.value['username'], this.registerForm.value['password'])
+        .then((result) => {
+          if(result === true){
+            this.fileManager.exportJsonFile();
+            alert('a secure file has been downloaded to your device, keep this file secure and use it for next login');
+            this.router.navigate(['/PasswordViewer']);
+          }
+          else{
+            alert('something went wrong while creating the user')
+          }
+        })
     }
   }
 

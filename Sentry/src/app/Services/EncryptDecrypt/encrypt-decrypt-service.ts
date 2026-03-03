@@ -38,4 +38,8 @@ export class EncryptDecryptService extends BCryptHash {
   public verifyPassword(passwordToVerify : string, hashedPassword : string) : Promise<boolean> {
     return this.verifyPlainTextAgainstHash(passwordToVerify, hashedPassword)
   }
+
+  public hashPassword(plainTextPassword: string) : Promise<string>{
+    return this.hashPlainText(plainTextPassword);
+  }
 }

@@ -137,6 +137,24 @@ export class FileManager {
     this.addEncryptedCredential(encryptedCredential);
   }
 
+  public async onboardObjectForNewUser(username: string, password: string) : Promise<boolean>{
+    try{
+      const hashedPassword = await this.encryptDecryptService.hashPassword(password);
+      this._allCredentialDetails = {
+        publicId: crypto.randomUUID().toString(),
+        userId: username,
+        password: hashedPassword,
+        fileName: '',
+        credentials: []
+      }
+      return true;
+    }
+    catch(e){
+      console.error('Error while onboarding user:', e);
+      return false;
+    }
+  }
+
   public updateCredentials(decryptedCred: DecryptedCredentials){
     const encryptedCred = this._allCredentialDetails.credentials.filter((cred) => cred.domainName === decryptedCred.domainName && cred.userId === decryptedCred.userId);
     if(encryptedCred.length > 0){
