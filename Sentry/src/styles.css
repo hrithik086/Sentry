@@ -1,4 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global Styles & Variables */
+:root {
+  /* Colors */
+  --primary-color: #1a73e8;
+  --primary-dark: #1557b0;
+  --primary-light: rgba(26, 115, 232, 0.1);
+  --secondary-color: #27d0c0;
+  --accent-color: #7c3aed;
+  
+  --bg-color: #f6f8fa;
+  --surface-color: #ffffff;
+  --border-color: #e5e7eb;
+  
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-on-primary: #ffffff;
+  
+  --error-color: #dc2626;
+  --success-color: #16a34a;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Dark Mode Overrides */
+body.dark-mode {
+  --bg-color: #111827;
+  --surface-color: #1f2937;
+  --border-color: #374151;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --primary-light: rgba(59, 130, 246, 0.2);
+}
+
+html, body { 
+  height: 100%; 
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Utility Classes */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+}

@@ -1,60 +1,64 @@
-<div style="display: flex;">
-    <div class="DisplayCard" style="background-image: url('SentryLogo/SentryLogo.png');">
-        <div class="displayTitleCard">
-            <h2>{{websiteTitle}}</h2>
-            <p>{{tagLine}}</p>
+<div class="login-page">
+  <div class="login-container">
+    <div class="brand-section">
+      <div class="brand-content">
+        <img src="SentryLogo/SentryLogo.png" alt="Sentry Logo" class="brand-logo">
+        <h2 class="brand-title">{{websiteTitle}}</h2>
+        <p class="brand-tagline">{{tagLine}}</p>
+      </div>
+    </div>
+
+    <div class="auth-section">
+      <div class="auth-card">
+        <div class="card-header">
+          <h1 class="form-header">Welcome Back</h1>
+          <p class="form-subheader">Please enter your details to sign in</p>
         </div>
-    </div>
-    <div class="loginCard">
-        <h1 class="formHeader">Welcome back</h1>
 
-        <form [formGroup]="loginForm" class="loginForm" autocomplete="off" (ngSubmit)="onSubmit()" >
-            <div class="inputGroup">
-                <label for="username">Username</label>
-                <input id="username" class="input" type="text" placeholder="Enter username" formControlName="username"/>
-            </div>
+        <form [formGroup]="loginForm" class="auth-form" (ngSubmit)="onSubmit()" autocomplete="off">
+          <div class="input-group">
+            <label for="username">Username</label>
+            <input id="username" class="form-input" type="text" placeholder="Enter username" formControlName="username" />
+          </div>
 
-            <div class="inputGroup">
-                <label for="password">Password</label>
-                <input id="password" class="input" type="password" placeholder="Enter password" formControlName="password"/>
-            </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input id="password" class="form-input" type="password" placeholder="Enter password" formControlName="password" />
+          </div>
 
-            <div class="inputGroup">
-                <label>Upload file</label>
-                <input #fileInput id="fileInput" type="file" style="display:none" accept=".json"/>
-                <div class="fileRow">
-                    <label class="fileLabel" for="fileInput">Browse...</label>
-                    <span id="fileName" class="fileName">No file chosen</span>
-                </div>
+          <div class="input-group">
+            <label>Master Key File</label>
+            <input #fileInput id="fileInput" type="file" style="display:none" accept=".json" (change)="onFileSelected($event)" />
+            <div class="file-upload-row">
+              <label class="file-browse-btn" for="fileInput">Browse...</label>
+              <span id="fileName" class="file-name-display">{{ selectedFileName || 'No file chosen' }}</span>
             </div>
+          </div>
 
-            <button type="submit" class="submitBtn">Sign in</button>
-        </form>
-        <br>
-        <hr>
-        <br>
-        <h1 class="formHeader">New User ? Register Here</h1>
-
-        <form [formGroup]="registerForm" class="loginForm" autocomplete="off" (ngSubmit)="onRegister()">
-            <div class="inputGroup">
-                <label for="username">Username</label>
-                <input id="username" class="input" type="text" placeholder="Enter username" formControlName="username"/>
-            </div>
-            <div class="inputGroup">
-                <label for="password">Password</label>
-                <input id="password" class="input" type="password" placeholder="Enter password" formControlName="password"/>
-            </div>
-            <button type="submit" class="submitBtn">Register</button>
+          <button type="submit" class="btn-primary full-width" [disabled]="loginForm.invalid">Sign In</button>
         </form>
 
+        <div class="divider">
+          <span>OR</span>
+        </div>
 
+        <div class="card-header">
+          <h1 class="form-header">Create Account</h1>
+          <p class="form-subheader">New to Sentry? Register here</p>
+        </div>
 
-        <script>
-        const fileInput = document.getElementById('fileInput');
-        const fileName = document.getElementById('fileName');
-        fileInput.addEventListener('change', ()=> {
-            fileName.textContent = fileInput.files.length ? fileInput.files[0].name : 'No file chosen';
-        });
-        </script>
+        <form [formGroup]="registerForm" class="auth-form" (ngSubmit)="onRegister()" autocomplete="off">
+          <div class="input-group">
+            <label for="reg-username">Username</label>
+            <input id="reg-username" class="form-input" type="text" placeholder="Choose a username" formControlName="username" />
+          </div>
+          <div class="input-group">
+            <label for="reg-password">Password</label>
+            <input id="reg-password" class="form-input" type="password" placeholder="Choose a strong password" formControlName="password" />
+          </div>
+          <button type="submit" class="btn-secondary full-width" [disabled]="registerForm.invalid">Register</button>
+        </form>
+      </div>
     </div>
+  </div>
 </div>

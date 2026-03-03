@@ -25,19 +25,30 @@ export class Login implements OnDestroy{
 
   public readonly loginForm: FormGroup;
   public readonly registerForm: FormGroup;
+  public selectedFileName: string = '';
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      username: [''],
-      password: [''],
-      uploadedFile: [null, Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      uploadedFile: [null]
     });
     this.registerForm = formBuilder.group({
-      username: [''],
-      password: ['']
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
 
     this.jsonReadSuccessfulSubscription = this.fileManager.JsonReadSuccessfulObservable.subscribe(status => this.jsonReadSuccessfulListener(status));
+  }
+
+  public onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFileName = file.name;
+      this.loginForm.patchValue({
+        uploadedFile: file
+      });
+    }
   }
 
   ngOnDestroy(): void {
