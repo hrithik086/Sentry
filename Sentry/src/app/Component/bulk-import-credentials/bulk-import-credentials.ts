@@ -75,7 +75,7 @@ export class BulkImportCredentials {
   downloadTemplate(): void {
     const link = document.createElement('a');
     link.setAttribute('href', 'Files/Bulk Import.xlsx');
-    link.setAttribute('download', 'credential-import-template.csv');
+    link.setAttribute('download', 'Bulk-Import-Credentials.xlsx');
     link.style.visibility = 'hidden';
 
     document.body.appendChild(link);
