@@ -34,8 +34,8 @@
               <span id="fileName" class="file-name-display">{{ selectedFileName || 'No file chosen' }}</span>
             </div>
           </div>
-
           <button type="submit" class="btn-primary full-width" [disabled]="loginForm.invalid">Sign In</button>
+          <app-google-sign-in-button-wrapper (authCompletionEvent)="googleSSOAuthCompletionEvent($event)"></app-google-sign-in-button-wrapper>
         </form>
 
         <div class="divider">

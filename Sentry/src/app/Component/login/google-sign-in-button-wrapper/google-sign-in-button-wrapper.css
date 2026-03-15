@@ -1,0 +1,47 @@
+@keyframes rainbow-bg {
+    0% { background-color: #ffebee; }
+    14% { background-color: #fff3e0; }
+    28% { background-color: #fffde7; }
+    42% { background-color: #e8f5e9; }
+    57% { background-color: #e3f2fd; }
+    71% { background-color: #f3e5f5; }
+    85% { background-color: #fce4ec; }
+    100% { background-color: #ffebee; }
+}
+
+.google-sign-in-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 42px;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    color: #3c4043;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color .2s, border-color .2s, box-shadow .2s;
+    margin-bottom: 12px;
+    animation: rainbow-bg 7s linear infinite;
+}
+
+.google-sign-in-btn:hover {
+    background-color: #f7fafe;
+    border-color: #d2e3fc;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+}
+
+.google-sign-in-btn:active {
+    background-color: #f1f3f4;
+    box-shadow: none;
+}
+
+.google-icon {
+    margin-right: 12px;
+    width: 18px;
+    height: 18px;
+}
