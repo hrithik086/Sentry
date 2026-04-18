@@ -81,7 +81,7 @@ export class Login implements OnDestroy{
           if(result === true){
             this.fileManager.exportJsonFile();
             alert('a secure file has been downloaded to your device, keep this file secure and use it for next login');
-            this.router.navigate(['/PasswordViewer']);
+            this.router.navigate(['/PasswordManager/PasswordViewer']);
           }
           else{
             alert('something went wrong while creating the user')
@@ -95,7 +95,7 @@ export class Login implements OnDestroy{
       .then(result => {
         if(result){
           this.isAuthenticationSuccess = true;
-          this.router.navigate(['/PasswordViewer']);
+          this.router.navigate(['/PasswordManager/PasswordViewer']);
         }
         else{
           //show warning that entered usernam and password is wrong
