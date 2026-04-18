@@ -6,11 +6,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Observable, Subject, Subscription } from 'rxjs';
 import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
 import { Router } from '@angular/router';
-import { GoogleSignInButtonWrapper } from './google-sign-in-button-wrapper/google-sign-in-button-wrapper';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, GoogleSignInButtonWrapper],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -89,10 +88,6 @@ export class Login implements OnDestroy{
           }
         })
     }
-  }
-
-  public googleSSOAuthCompletionEvent(response: any){
-    console.log(response);
   }
 
   private jsonReadSuccessfulListener(status : boolean) : void {
