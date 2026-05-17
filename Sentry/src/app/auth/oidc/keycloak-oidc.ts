@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Keycloak from 'keycloak-js';
+import Keycloak, { KeycloakInitOptions } from 'keycloak-js';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +11,14 @@ export class KeycloakOidc {
     clientId: "Sentry-Ui-Client"
   });
 
-  public async isAuthenticated() : Promise<boolean>{
+  public async isAuthenticated(redirectUri: string = '') : Promise<boolean>{
     try{
-      var authenticated = await this.keycloak.init({
+      const keycloadInitOptions : KeycloakInitOptions = {
         onLoad: 'login-required',
         pkceMethod: 'S256'
-      });
+      }
+      keycloadInitOptions.redirectUri = redirectUri?.trim().length > 0 ? redirectUri : undefined;
+      const authenticated = await this.keycloak.init(keycloadInitOptions);
       return authenticated;
     }
     catch(error){

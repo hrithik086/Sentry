@@ -190,6 +190,53 @@
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
 }
 
+/* Keycloak SSO button - polished/formal styling */
+.sso-form .form-subheader {
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.btn-keycloak {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #3b2f63 0%, #2a1f49 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(24,18,56,0.35), inset 0 -1px 0 rgba(255,255,255,0.02);
+  transition: transform 160ms var(--transition-ease), box-shadow 160ms var(--transition-ease), opacity 160ms var(--transition-ease);
+}
+
+.btn-keycloak .keycloak-logo{
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  color: #fff;
+  font-size: 18px;
+}
+
+.btn-keycloak:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(24,18,56,0.45);
+  opacity: 0.98;
+}
+
+.sso-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .full-width {
   width: 100%;
 }

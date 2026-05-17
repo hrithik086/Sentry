@@ -15,27 +15,12 @@
           <p class="form-subheader">Please enter your details to sign in</p>
         </div>
 
-        <form [formGroup]="loginForm" class="auth-form" (ngSubmit)="onSubmit()" autocomplete="off">
-          <div class="input-group">
-            <label for="username">Username</label>
-            <input id="username" class="form-input" type="text" placeholder="Enter username" formControlName="username" />
-          </div>
-
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input id="password" class="form-input" type="password" placeholder="Enter password" formControlName="password" />
-          </div>
-
-          <div class="input-group">
-            <label>Master Key File</label>
-            <input #fileInput id="fileInput" type="file" style="display:none" accept=".json" (change)="onFileSelected($event)" />
-            <div class="file-upload-row">
-              <label class="file-browse-btn" for="fileInput">Browse...</label>
-              <span id="fileName" class="file-name-display">{{ selectedFileName || 'No file chosen' }}</span>
-            </div>
-          </div>
-
-          <button type="submit" class="btn-primary full-width" [disabled]="loginForm.invalid">Sign In</button>
+        <form class="auth-form sso-form" autocomplete="off">
+          <p class="form-subheader">Use your organization account to sign in</p>
+          <button type="button" id="keycloak-login" class="btn-keycloak full-width" (click)="loginWithKeycloak()" title="Sign in with Keycloak">
+            <span class="keycloak-logo" aria-hidden="true">🔐</span>
+            <span class="sso-text">Sign in with Keycloak</span>
+          </button>
         </form>
 
         <div class="divider">

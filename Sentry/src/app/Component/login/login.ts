@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Observable, Subject, Subscription } from 'rxjs';
 import { EncryptDecryptService } from '../../Services/EncryptDecrypt/encrypt-decrypt-service';
 import { Router } from '@angular/router';
+import { KeycloakOidc } from '../../auth/oidc/keycloak-oidc';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class Login implements OnDestroy{
   private fileManager: FileManager = inject(FileManager);
   private encryptDecryptService : EncryptDecryptService = inject(EncryptDecryptService);
   private router : Router = inject(Router);
+  private keycloakOidc: KeycloakOidc = inject(KeycloakOidc);
   private jsonReadSuccessfulSubscription : Subscription;
 
   private isAuthenticationSuccess : boolean = false;
@@ -88,6 +90,10 @@ export class Login implements OnDestroy{
           }
         })
     }
+  }
+
+  public loginWithKeycloak(){
+    this.router.navigateByUrl('/PasswordManager/PasswordViewer');
   }
 
   private jsonReadSuccessfulListener(status : boolean) : void {
