@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ff135259-7dc1-45d0-be1c-003191f4b8ff" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service.slnx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/Controller/TestController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/Properties/launchSettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/Sentry-Core-Service.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/Sentry-Core-Service.http" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.AspNetCore.OpenApi.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.IdentityModel.Abstractions.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.IdentityModel.JsonWebTokens.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.IdentityModel.Logging.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.IdentityModel.Protocols.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.IdentityModel.Tokens.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Microsoft.OpenApi.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Sentry-Core-Service" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Sentry-Core-Service.deps.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Sentry-Core-Service.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Sentry-Core-Service.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Sentry-Core-Service.runtimeconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Sentry-Core-Service.staticwebassets.endpoints.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Swashbuckle.AspNetCore.Swagger.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerGen.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/Swashbuckle.AspNetCore.SwaggerUI.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/System.IdentityModel.Tokens.Jwt.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/appsettings.Development.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/bin/Debug/net10.0/appsettings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/.NETCoreApp,Version=v10.0.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-C.A4F7DF4D.Up2Date" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.AssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.AssemblyInfoInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.GlobalUsings.g.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.MvcApplicationPartsAssemblyInfo.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.MvcApplicationPartsAssemblyInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.assets.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.genruntimeconfig.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/Sentry-Core-Service.sourcelink.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/apphost" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/ref/Sentry-Core-Service.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/refint/Sentry-Core-Service.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/rjsmrazor.dswa.cache.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/rpswa.dswa.cache.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/staticwebassets.build.endpoints.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/staticwebassets.build.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/staticwebassets.build.json.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Debug/net10.0/swae.build.ex.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Sentry-Core-Service.csproj.nuget.dgspec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Sentry-Core-Service.csproj.nuget.g.props" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/Sentry-Core-Service.csproj.nuget.g.targets" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/project.assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/project.nuget.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/project.packagespec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/rider.project.model.nuget.info" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sentry-Core-Service/obj/rider.project.restore.info" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/hrithik/Projects/GIT/Sentry/Backend/Sentry-Service/Sentry-Core-Service" value="3EAV8iC85JCgP0ZfVl9WyY7DZTc" />
+    </persistenceIdMap>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="3EAV8iC85JCgP0ZfVl9WyY7DZTc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "Adding__backend__with__keycloakIDP",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ff135259-7dc1-45d0-be1c-003191f4b8ff" name="Changes" comment="" />
+      <created>1779621204412</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779621204412</updated>
+      <workItem from="1779621205584" duration="66000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>

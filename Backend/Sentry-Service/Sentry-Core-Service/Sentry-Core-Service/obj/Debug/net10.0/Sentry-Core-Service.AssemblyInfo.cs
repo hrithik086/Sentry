@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sentry-Core-Service")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6827951a5d95b309e87dcf9a5c48b7feffba2174")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9203033017417397ca951036af9c6db4197402f2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sentry-Core-Service")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sentry-Core-Service")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
