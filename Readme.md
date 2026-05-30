@@ -40,22 +40,42 @@ Sentry follows a **Zero-Knowledge Architecture**:
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18 or higher recommended)
 - [npm](https://www.npmjs.com/)
+- [Dotnet] (core 10)
+- [Docker]
 
 ### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/hrithik086/Sentry.git
-   cd sentry/Sentry
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the application:
-   ```bash
-   npm start
-   ```
-4. Open your browser and navigate to `http://localhost:4200`.
+**Front End **
+  1. Clone the repository:
+     ```bash
+     git clone https://github.com/hrithik086/Sentry.git
+     cd sentry/Sentry
+     ```
+  2. Install dependencies:
+     ```bash
+     npm install
+     ```
+  3. Start the application:
+     ```bash
+     npm start
+     ```
+  4. Open your browser and navigate to `http://localhost:4200`.
+
+**Back End Dev Setup**
+   1. run docker compose
+      - Go to the pat 'Sentry/Help Files' Here you will find one 'docker-compose.yml' file
+      - open terminal in this path
+      - execute the command
+         - ```shell
+            docker compose up -d
+            docker container ls
+         ```
+      - check if all the three containers keycloak, mongodb, postgres are in running state
+   2. Open Backend Project in the path Sentry/Backend/Sentry-Service/Sentry-Core-Service
+   3. dotnet tool list --global run this command and check if you have installed dotnet ef or not
+      1. if dotnet ef is not installed execute this command dotnet tool install --global dotnet-ef
+   4. execute this command to create export db and schemas to your postgres db
+      1. dotnet ef database update InitialMigration
+
 
 ---
 

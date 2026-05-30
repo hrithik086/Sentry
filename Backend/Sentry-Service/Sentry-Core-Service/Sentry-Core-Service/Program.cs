@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Sentry_Core_Service.Helper;
+using Sentry.Core.Service.Repository.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContext<SentrySqlDbContext>(options => 
+    options.UseNpgsql(builder.Configuration
+            .GetConnectionString("SqlDbConnectionString"))
+    );
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -15,6 +23,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
     });
 builder.Services.AddAuthorization();
+
 builder.Services.AddSentryCoreDependencies();
 
 var app = builder.Build();

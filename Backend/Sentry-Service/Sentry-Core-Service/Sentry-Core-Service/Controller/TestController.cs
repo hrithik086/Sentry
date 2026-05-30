@@ -11,6 +11,6 @@ public class TestController(IContextAccessor _context): ControllerBase
     [HttpGet("test")]
     public string TestEndPoint()
     {
-        return "Hello User, Test Success";
+        return _context.UserContext.Email;
     }
 }
