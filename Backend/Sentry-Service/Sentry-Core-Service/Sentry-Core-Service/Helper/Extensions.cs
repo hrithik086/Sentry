@@ -1,6 +1,9 @@
 using System.Security.Claims;
 using Sentry.Core.Service.Helper.ContextAccessor;
 using Sentry.Core.Service.Repository;
+using Sentry.Core.Service.Services;
+using Sentry.Core.Service.Services.HashingServices;
+using Sentry.Core.Service.Services.HashingServices.HashingAlgorithms;
 
 namespace Sentry_Core_Service.Helper;
 
@@ -34,7 +37,10 @@ public static class Extensions
             };
         });
         
+        services.AddScoped<IPasswordHasherFactory>(sp => new PasswordHasherFactory()
+                                                    .CreatePasswordHasher(HashAlgorithms.Argon2));
         services.AddScoped<IMasterKeyRepository, MasterKeyRepository>();
+        services.AddScoped<IMasterKeyService, MasterKeyService>();
         
         return services;
     }

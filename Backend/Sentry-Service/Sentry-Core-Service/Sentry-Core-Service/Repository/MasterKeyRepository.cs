@@ -1,18 +1,23 @@
+using Sentry.Core.Service.Helper.ContextAccessor;
 using Sentry.Core.Service.Repository.Db;
 using Sentry.Core.Service.Repository.Db.Models;
 
 namespace Sentry.Core.Service.Repository;
 
-public class MasterKeyRepository(SentrySqlDbContext sentrySqlDbContext) : IMasterKeyRepository
+public class MasterKeyRepository(SentrySqlDbContext sentrySqlDbContext, IContextAccessor contextAccessor) : IMasterKeyRepository
 {
-    public async Task<bool> AddMasterKeyAsync(Guid userId, string salt, string hash)
+    public async Task<bool> AddMasterKeyAsync(Guid userId, string hash)
     {
         try
         {
             await sentrySqlDbContext.MasterKeys.AddAsync(
                 new MasterKeys()
                 {
-                    UserId = userId, Salt = salt, Hash = hash
+                    UserId = userId, Hash = hash,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                    ModifiedAt = DateTimeOffset.UtcNow,
+                    CreatedBy = contextAccessor.UserContext.Email,
+                    ModifiedBy = contextAccessor.UserContext.Email
                 }
             );
             await sentrySqlDbContext.SaveChangesAsync();
@@ -24,7 +29,7 @@ public class MasterKeyRepository(SentrySqlDbContext sentrySqlDbContext) : IMaste
         }
     }
 
-    public async Task<(string salt, string hash)> GetMasterKeyAsync(Guid userId)
+    public async Task<string> GetMasterKeyAsync(Guid userId)
     {
         var masterKey = await sentrySqlDbContext.MasterKeys
             .FindAsync(userId);
@@ -35,6 +40,6 @@ public class MasterKeyRepository(SentrySqlDbContext sentrySqlDbContext) : IMaste
             throw new Exception("Master key not found for the given user ID.");
         }
 
-        return (masterKey.Salt, masterKey.Hash);
+        return masterKey.Hash;
     }
 }
