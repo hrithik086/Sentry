@@ -1,13 +1,16 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Sentry_Core_Service.Filters;
 using Sentry_Core_Service.Helper;
 using Sentry.Core.Service.Repository.Db;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options => 
+    options.Filters.Add<RequestModelValidationFilter>()
+    );
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<SentrySqlDbContext>(options => 
@@ -25,6 +28,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 builder.Services.AddSentryCoreDependencies();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
 
