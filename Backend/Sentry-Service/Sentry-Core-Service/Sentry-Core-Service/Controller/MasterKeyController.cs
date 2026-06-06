@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sentry_Core_Service.Models.RequestDTO;
 using Sentry.Core.Service.Helper;
-using Sentry.Core.Service.Helper.ContextAccessor;
+using Sentry.Core.Service.Helper.Context;
 using Sentry.Core.Service.Services;
 
 namespace Sentry_Core_Service.Controller;

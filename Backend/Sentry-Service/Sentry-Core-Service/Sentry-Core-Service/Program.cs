@@ -1,8 +1,8 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Sentry_Core_Service.Filters;
-using Sentry_Core_Service.Helper;
+using Sentry.Core.Service.Filters;
+using Sentry.Core.Service.Helper;
 using Sentry.Core.Service.Repository.Db;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,4 +1,4 @@
-using Sentry.Core.Service.Helper.ContextAccessor;
+using Sentry.Core.Service.Helper.Context;
 using Sentry.Core.Service.Repository;
 using Sentry.Core.Service.Services.HashingServices;
 
@@ -12,12 +12,12 @@ public class MasterKeyService(IPasswordHasherFactory passwordHasherFactory,
     {
         var hasher = passwordHasherFactory.GetPasswordHasher();
         var hashedPassword = hasher.HashPassword(masterKey);
-        return await masterKeyRepository.AddMasterKeyAsync(contextAccessor.UserContext.UserId, hashedPassword);
+        return await masterKeyRepository.AddMasterKeyAsync(contextAccessor.UserDetails.UserId, hashedPassword);
     }
 
     public async Task<bool> VerifyMasterKey(string actualMasterKey)
     {
-        var expectedMasterKeyHash = await masterKeyRepository.GetMasterKeyAsync(contextAccessor.UserContext.UserId);
+        var expectedMasterKeyHash = await masterKeyRepository.GetMasterKeyAsync(contextAccessor.UserDetails.UserId);
         var hasher = passwordHasherFactory.GetPasswordHasher();
         
         return hasher.VerfiyPasswordAndHash(actualMasterKey, expectedMasterKeyHash);

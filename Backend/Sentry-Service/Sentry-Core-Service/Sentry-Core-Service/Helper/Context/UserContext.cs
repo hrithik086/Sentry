@@ -1,4 +1,4 @@
-namespace Sentry.Core.Service.Helper.ContextAccessor;
+namespace Sentry.Core.Service.Helper.Context;
 
 public class UserContext
 {

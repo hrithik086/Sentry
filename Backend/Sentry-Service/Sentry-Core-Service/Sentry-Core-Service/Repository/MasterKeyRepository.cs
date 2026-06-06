@@ -1,4 +1,4 @@
-using Sentry.Core.Service.Helper.ContextAccessor;
+using Sentry.Core.Service.Helper.Context;
 using Sentry.Core.Service.Repository.Db;
 using Sentry.Core.Service.Repository.Db.Models;
 
@@ -16,8 +16,8 @@ public class MasterKeyRepository(SentrySqlDbContext sentrySqlDbContext, IContext
                     UserId = userId, Hash = hash,
                     CreatedAt = DateTimeOffset.UtcNow,
                     ModifiedAt = DateTimeOffset.UtcNow,
-                    CreatedBy = contextAccessor.UserContext.Email,
-                    ModifiedBy = contextAccessor.UserContext.Email
+                    CreatedBy = contextAccessor.UserDetails.Email,
+                    ModifiedBy = contextAccessor.UserDetails.Email
                 }
             );
             await sentrySqlDbContext.SaveChangesAsync();

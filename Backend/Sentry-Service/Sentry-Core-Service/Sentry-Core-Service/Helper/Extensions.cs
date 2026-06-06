@@ -1,11 +1,12 @@
 using System.Security.Claims;
-using Sentry.Core.Service.Helper.ContextAccessor;
+using Sentry.Core.Service.Models.Validators;
+using Sentry.Core.Service.Helper.Context;
 using Sentry.Core.Service.Repository;
 using Sentry.Core.Service.Services;
 using Sentry.Core.Service.Services.HashingServices;
 using Sentry.Core.Service.Services.HashingServices.HashingAlgorithms;
 
-namespace Sentry_Core_Service.Helper;
+namespace Sentry.Core.Service.Helper;
 
 public static class Extensions
 {
@@ -30,10 +31,10 @@ public static class Extensions
                         .FirstOrDefault(c => c.Type.Equals(ClaimTypes.Email))?
                         .Value ?? ""
             };
-            
+
             return new ContextAccessor()
             {
-                UserContext = userContext
+                UserDetails = userContext
             };
         });
         
@@ -41,6 +42,8 @@ public static class Extensions
                                                     .CreatePasswordHasher(HashAlgorithms.Argon2));
         services.AddScoped<IMasterKeyRepository, MasterKeyRepository>();
         services.AddScoped<IMasterKeyService, MasterKeyService>();
+        
+        SentryValidators.ParseAllValidators();
         
         return services;
     }
