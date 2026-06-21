@@ -43,7 +43,7 @@ public static class Extensions
         services.AddScoped<IMasterKeyRepository, MasterKeyRepository>();
         services.AddScoped<IMasterKeyService, MasterKeyService>();
         
-        SentryValidators.ParseAllValidators();
+        SingletonSentryValidators.ParseAllValidators();
         
         return services;
     }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Sentry.Core.Service.Filters;
 using Sentry.Core.Service.Helper;
 using Sentry.Core.Service.Repository.Db;
+using Sentry.Core.Service.Repository.NoSqlDb;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,13 @@ builder.Services.AddDbContext<SentrySqlDbContext>(options =>
     options.UseNpgsql(builder.Configuration
             .GetConnectionString("SqlDbConnectionString"))
     );
+builder.Services.AddDbContext<SentryNoSqlDbContext>(options =>
+{
+    var mongodbConnectionString = builder.Configuration
+                                    .GetConnectionString("MongoDbConnectionString:ConnectionString");
+    var databaseName = builder.Configuration.GetConnectionString("MongoDbConnectionString:DatabaseName");
+    options.UseMongoDB(mongodbConnectionString, databaseName);
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

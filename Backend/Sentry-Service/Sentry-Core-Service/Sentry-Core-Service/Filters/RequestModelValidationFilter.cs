@@ -16,7 +16,7 @@ public class RequestModelValidationFilter() : IAsyncActionFilter
         {
             var modelType = value?.GetType();
             if (modelType is not null 
-                && SentryValidators.IsValidatorRegisteredForRequestModelType(modelType))
+                && SingletonSentryValidators.IsValidatorRegisteredForRequestModelType(modelType))
             {
                 var validator = context.HttpContext
                     .RequestServices.GetService(typeof(IValidator<>)

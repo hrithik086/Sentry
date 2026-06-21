@@ -2,16 +2,16 @@ using FluentValidation;
 
 namespace Sentry.Core.Service.Models.Validators;
 
-public class SentryValidators
+public class SingletonSentryValidators
 {
-    private static SentryValidators? _instance = null;
+    private static SingletonSentryValidators? _instance = null;
     private readonly List<Type> _allSentryValidators = new ();
-    private SentryValidators(){}
+    private SingletonSentryValidators(){}
 
     public static void ParseAllValidators()
     {
         if (_instance == null)
-            _instance = new SentryValidators();
+            _instance = new SingletonSentryValidators();
         
         if(_instance._allSentryValidators.Count == 0)
         {

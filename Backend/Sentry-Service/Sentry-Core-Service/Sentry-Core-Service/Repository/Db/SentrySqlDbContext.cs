@@ -10,5 +10,6 @@ public class SentrySqlDbContext(DbContextOptions<SentrySqlDbContext> options) : 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.HasDefaultSchema("key");
     }
 }
