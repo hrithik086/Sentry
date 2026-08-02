@@ -3,6 +3,7 @@ using Sentry.Core.Service.Models.Validators;
 using Sentry.Core.Service.Helper.Context;
 using Sentry.Core.Service.Repository;
 using Sentry.Core.Service.Services;
+using Sentry.Core.Service.Services.CredentialsService;
 using Sentry.Core.Service.Services.HashingServices;
 using Sentry.Core.Service.Services.HashingServices.HashingAlgorithms;
 
@@ -42,6 +43,9 @@ public static class Extensions
                                                     .CreatePasswordHasher(HashAlgorithms.Argon2));
         services.AddScoped<IMasterKeyRepository, MasterKeyRepository>();
         services.AddScoped<IMasterKeyService, MasterKeyService>();
+        
+        services.AddScoped<ICredentialsRepository, CredentialsRepository>();
+        services.AddScoped<ICredentialsService, CredentialsService>();
         
         SingletonSentryValidators.ParseAllValidators();
         

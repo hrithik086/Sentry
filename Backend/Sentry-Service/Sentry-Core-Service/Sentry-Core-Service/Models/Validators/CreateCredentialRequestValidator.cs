@@ -7,12 +7,11 @@ public class CreateCredentialRequestValidator : AbstractValidator<CreateCredenti
 {
     public CreateCredentialRequestValidator()
     {
-        RuleFor(x => x.UserId)
-            .NotNull()
-            .NotEqual(Guid.Empty)
-            .WithMessage("UserId is required.");
+        RuleFor(c => c.Credential)
+            .NotEmpty()
+            .WithMessage("Credentials is required.");
         
-        RuleFor(x => x.Credential)
+        RuleForEach(x => x.Credential)
             .NotNull()
             .ChildRules(credential =>
             {
@@ -33,7 +32,7 @@ public class CreateCredentialRequestValidator : AbstractValidator<CreateCredenti
                 credential.RuleFor(c => c.Password)
                     .NotNull()
                     .NotEmpty()
-                    .WithMessage("Password must be at least 8 characters long.");
+                    .WithMessage("DomainName must be at least 8 characters long.");
             });
     }
 }

@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Sentry.Core.Service.Repository.NoSqlDb.Models;
 
+[Table("UserCredential")]
 public class UserCredential
 {
     [BsonId]

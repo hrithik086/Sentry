@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Sentry.Core.Service.Filters;
 using Sentry.Core.Service.Helper;
+using Sentry.Core.Service.Helper.AutoMapper;
 using Sentry.Core.Service.Repository.Db;
 using Sentry.Core.Service.Repository.NoSqlDb;
 
@@ -36,6 +37,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 builder.Services.AddSentryCoreDependencies();
+builder.Services.AddSentryAutoMapper();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
