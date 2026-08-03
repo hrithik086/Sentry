@@ -31,7 +31,7 @@ public class CredentialsService : ICredentialsService
         if (userCredentials == null)
             return new(null, "No Credentials foudn for this user");
         else
-            return new(_mapper.Map<IList<DTO.Credential>>(userCredentials));
+            return new(_mapper.Map<IList<DTO.Credential>>(userCredentials.Credentials));
     }
 
     public async Task<ApiResponse<IList<DTO.Credential>>> CreateNewCredentials(IList<DTO.Credential> credentials)
@@ -54,5 +54,13 @@ public class CredentialsService : ICredentialsService
             var isRecordsUpdated = await _credentialsRepository.UpdateUserCredentialsAsnc(_contextAccessor.UserDetails.UserId, _mapper.Map<IList<Entities.Credential>>(credentials));
             return isRecordsUpdated ? new(credentials) : new(credentials, "Failed to update credentials");
         }
+    }
+
+    public async Task<ApiResponse<IList<DTO.Credential>>> DeleteCredentials(IList<CredentialIdentfier> credentials)
+    {
+        var credentialsRemovedFromSource =
+            await _credentialsRepository.DeleteUserCredentialsAsnc(_contextAccessor.UserDetails.UserId, credentials);
+
+        return new ApiResponse<IList<DTO.Credential>>(_mapper.Map<IList<DTO.Credential>>(credentialsRemovedFromSource));
     }
 }

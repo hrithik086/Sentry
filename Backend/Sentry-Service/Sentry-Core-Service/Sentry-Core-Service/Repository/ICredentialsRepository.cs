@@ -12,4 +12,7 @@ public interface ICredentialsRepository
     Task<IList<Entities.Credential>> GetAllMatchingCredentialsAsync(IList<CredentialIdentfier> identifiers, Guid userId);
     Task<bool> UpdateUserCredentialsAsnc(Guid userId, IList<Credential> credentials);
     Task<int> CreateNewUserCredentialsAsync(IList<Credential> credentials, Guid userId);
+
+    Task<IList<Entities.Credential>> DeleteUserCredentialsAsnc(Guid userId,
+        IList<CredentialIdentfier> credentialIdentfiers);
 }

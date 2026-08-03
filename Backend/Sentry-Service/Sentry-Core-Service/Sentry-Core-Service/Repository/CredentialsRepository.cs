@@ -42,10 +42,8 @@ public class CredentialsRepository : ICredentialsRepository
     {
         try
         {
-            var user = await _dbContext.UserCredentials
-                .FirstOrDefaultAsync(x => x.Id == userId);
-
-            var filtered = user?.Credentials
+            var user = await GetUserCredentialByUserIdTrackedAsync(userId);
+            var filtered = user?.Credentials?
                 .Where(c =>
                     identifiers.Any(i =>
                         i.Username == c.UserName &&
@@ -61,16 +59,34 @@ public class CredentialsRepository : ICredentialsRepository
         }
     }
     
-    public async Task<bool> UpdateUserCredentialsAsnc(Guid userId, IList<Entities.Credential> credentials)
+    public async Task<bool> UpdateUserCredentialsAsnc(Guid userId, IList<Entities.Credential> sourceCredentials)
     {
         try
         {
-            var userCredential = await _dbContext.UserCredentials.FindAsync(userId);
-            if (userCredential == null)
+            var userCredential = await GetUserCredentialByUserIdTrackedAsync(userId);
+            if (userCredential == null || userCredential.Credentials == null)
             {
                 return false;
             }
-            userCredential.Credentials = credentials;
+
+            foreach (var targetCredential in userCredential.Credentials)
+            {
+                var sourceCredential = sourceCredentials.FirstOrDefault(source => 
+                    source.DomainName == targetCredential.DomainName
+                    && source.UserName == targetCredential.UserName
+                    && source.Email == targetCredential.Email
+                );
+
+                if (sourceCredential is not null)
+                {
+                    targetCredential.PhoneNumber = sourceCredential.PhoneNumber;
+                    targetCredential.Password = sourceCredential.Password;
+                    targetCredential.Pin = sourceCredential.Pin;
+                    targetCredential.SecurityKeys = sourceCredential.SecurityKeys;
+                    targetCredential.AdditionalInfo = sourceCredential.AdditionalInfo;
+                }
+            }
+            
             _dbContext.UserCredentials.Update(userCredential);
             await _dbContext.SaveChangesAsync();
             return true;
@@ -114,6 +130,41 @@ public class CredentialsRepository : ICredentialsRepository
         catch (Exception ex)
         {
             throw new InvalidOperationException($"Error creating user credentials for user {userId}", ex);
+        }
+    }
+    
+    public async Task<IList<Entities.Credential>> DeleteUserCredentialsAsnc(Guid userId, IList<CredentialIdentfier> credentialIdentfiers)
+    {
+        try
+        {
+            var userCredential = await GetUserCredentialByUserIdTrackedAsync(userId);
+            if (userCredential == null || userCredential.Credentials == null)
+            {
+                return new List<Entities.Credential>();
+            }
+
+            List<Entities.Credential> credentialsRemovedFromSource = new();
+            foreach (var credential in credentialIdentfiers)
+            {
+                var credentialToRemoveFromSource = userCredential.Credentials.FirstOrDefault(source =>
+                    source.DomainName == credential.DomainName
+                    && source.Email == credential.Email
+                    && source.UserName == credential.Username
+                    );
+
+                if (credentialToRemoveFromSource is not null)
+                {
+                    userCredential.Credentials.Remove(credentialToRemoveFromSource);
+                    credentialsRemovedFromSource.Add(credentialToRemoveFromSource);
+                } 
+            }
+            
+            await _dbContext.SaveChangesAsync();
+            return credentialsRemovedFromSource;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Error updating credentials for user {userId}", ex);
         }
     }
 }
